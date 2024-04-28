@@ -16,24 +16,24 @@ bool getMarkCode(std::vector<DateData> vec1,const std::string& lastDay)
 
     int last_candle;
     std::tm last_day = convertToDate(lastDay);
-    DateData prevInfo;
+    DateData* prevInfo{nullptr};
 
     for (DateData &obj : vec1)
     {
-        if (prevInfo.empty())
+        if (prevInfo->empty())
         {
-            prevInfo = obj;
+            prevInfo = &obj;
             continue;
         }
 
-        obj.Closed = prevInfo.Price;
+        obj.Closed = prevInfo->Price;
         
         if(std::mktime(&obj.Date) == std::mktime(&last_day))
         {
             last_candle = obj.getCandle();
         }
 
-        prevInfo = obj;
+        prevInfo = &obj;
     }
     
     if(vec1.back().getCandle() == last_candle)

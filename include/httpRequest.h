@@ -50,7 +50,7 @@ struct DateData
 
     bool empty() const
     {
-        return Date.tm_mday == 0;
+        return this == nullptr || Date.tm_mday == 0;
     }
 
     Candle getCandle()
